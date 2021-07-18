@@ -19,7 +19,7 @@ COPY . .
 RUN go test ./...
 
 # Build the application
-RUN GOOS=linux go build -o lambda.bin lambda/main.go
+RUN GOOS=linux go build -o lambda.bin main.go
 
 # ============= Execution Stage ================
 FROM alpine:3.12 AS execution
@@ -30,7 +30,7 @@ WORKDIR /run
 COPY --from=builder /build/lambda.bin .
 
 # TODO Switch to exec command form, wrapping arguments with double-quote
-CMD ./testsuite.bin \
+CMD ./lambda.bin \
     --custom-params-json="${CUSTOM_PARAMS_JSON}" \
     --kurtosis-api-socket="${KURTOSIS_API_SOCKET}" \
     --log-level="${LOG_LEVEL}"

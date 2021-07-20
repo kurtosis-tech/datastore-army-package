@@ -13,7 +13,8 @@ import (
 
 const (
 	datastoreImage = "kurtosistech/example-microservices_datastore"
-	datastorePortSpec = "1323/tcp"
+	datastorePortNumber uint32 = 1323
+	datastoreProtocol = "tcp"
 )
 
 type LambdaService struct {
@@ -42,15 +43,17 @@ func (l *LambdaService) Execute(ctx context.Context, args *kurtosis_lambda_rpc_a
 		return nil, stacktrace.Propagate(err, "An error occurred unmarshalling the params JSON")
 	}
 
-	createdServiceIdsSet := map[string]bool{}
+	createdServiceIdPorts := map[string]uint32{}
 	for i := uint32(0); i < paramsJson.NumDatastores; i++ {
 		serviceId, err := l.addDatastoreService()
 		if err != nil {
 			return nil, stacktrace.Propagate(err, "An error occurred adding a datastore service")
 		}
-		createdServiceIdsSet[string(serviceId)] = true
+		createdServiceIdPorts[string(serviceId)] = datastorePortNumber
 	}
-	resultObj := Result{CreatedServiceIdsSet: createdServiceIdsSet}
+	resultObj := Result{
+		CreatedServiceIdPorts: createdServiceIdPorts,
+	}
 	resultJsonBytes, err := json.Marshal(resultObj)
 	if err != nil {
 		return nil, stacktrace.Propagate(err, "An error occurred serialzing the Lambda result object to JSON")
@@ -66,7 +69,7 @@ func (l *LambdaService) addDatastoreService() (services.ServiceID, error) {
 	containerCreationConfig := services.NewContainerCreationConfigBuilder(
 		datastoreImage,
 	).WithUsedPorts(map[string]bool{
-		datastorePortSpec: true,
+		fmt.Sprintf("%v/%v", datastorePortNumber, datastoreProtocol): true,
 	}).Build()
 
 	containerRunConfigSupplier := func(

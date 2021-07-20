@@ -5,5 +5,5 @@ type Params struct {
 }
 
 type Result struct {
-	CreatedServiceIdsSet map[string]bool 	`json:"createdServiceIdsSet"`
+	CreatedServiceIdPorts map[string]uint32 `json:"createdServiceIdPorts"`
 }

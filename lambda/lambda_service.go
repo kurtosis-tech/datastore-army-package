@@ -62,28 +62,30 @@ func (l *LambdaService) Execute(ctx context.Context, args *kurtosis_lambda_rpc_a
 	response := &kurtosis_lambda_rpc_api_bindings.ExecuteResponse{ResponseJson: string(resultJsonBytes)}
 	return response, nil
 }
-
+// ====================================================================================================
+//                                       Private helper functions
+// ====================================================================================================
 func (l *LambdaService) addDatastoreService() (services.ServiceID, error) {
 	nextDatastoreServiceId := services.ServiceID(fmt.Sprintf("datastore-%v", l.numDatstoresAdded))
 
-	containerCreationConfig := services.NewContainerCreationConfigBuilder(
-		datastoreImage,
-	).WithUsedPorts(map[string]bool{
-		fmt.Sprintf("%v/%v", datastorePortNumber, datastoreProtocol): true,
-	}).Build()
+	datastoreContainerConfigSupplier := getDatastoreContainerConfigSupplier()
 
-	containerRunConfigSupplier := func(
-			ipAddr string,
-			generatedFileFilepaths map[string]string,
-			staticFileFilepaths map[services.StaticFileID]string) (*services.ContainerRunConfig, error) {
-		result := services.NewContainerRunConfigBuilder().Build()
-		return result, nil
-	}
-
-	if _, _, err := l.networkCtx.AddService(nextDatastoreServiceId, containerCreationConfig, containerRunConfigSupplier); err != nil {
+	if _, _, err := l.networkCtx.AddService(nextDatastoreServiceId, datastoreContainerConfigSupplier); err != nil {
 		return "", stacktrace.Propagate(err, "An error occurred adding datastore service '%v'", nextDatastoreServiceId)
 	}
 	l.numDatstoresAdded = l.numDatstoresAdded + 1
 	return nextDatastoreServiceId, nil
 }
 
+
+func getDatastoreContainerConfigSupplier() func(ipAddr string, sharedDirectory *services.SharedDirectory) (*services.ContainerConfig, error) {
+	containerConfigSupplier  := func(ipAddr string, sharedDirectory *services.SharedDirectory) (*services.ContainerConfig, error) {
+		containerConfig := services.NewContainerConfigBuilder(
+			datastoreImage,
+		).WithUsedPorts(
+			map[string]bool{fmt.Sprintf("%v/%v", datastorePortNumber, datastoreProtocol): true},
+		).Build()
+		return containerConfig, nil
+	}
+	return containerConfigSupplier
+}

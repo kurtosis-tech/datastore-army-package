@@ -12,4 +12,4 @@ executeResultObj = JSON.parse(executeResult.value)
 console.log(executeResultObj)
 ```
 
-Its args & result are JSON-serialized, corresponding to [these data structures](https://github.com/kurtosis-tech/datastore-army-lambda/blob/master/lambda/api.go).
+Its args & result are JSON-serialized, corresponding to [these data structures](https://github.com/kurtosis-tech/datastore-army-module/blob/master/kurtosis-module/impl/api.go).

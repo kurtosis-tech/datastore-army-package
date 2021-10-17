@@ -1,13 +1,13 @@
-Datastore Army Lambda
+Datastore Army Module
 =====================
-This repository contains [a Kurtosis Lambda](https://github.com/kurtosis-tech/kurtosis-lambda-api-lib/pull/11) that starts [example datastore services](https://github.com/kurtosis-tech/example-microservices/tree/develop/datastore). It is principally for demo purposes, and is published to Dockerhub [here](https://hub.docker.com/r/kurtosistech/datastore-army-lambda).
+This repository contains [an executable Kurtosis module](https://docs.kurtosistech.com/lambdas.html) that starts [example datastore services](https://github.com/kurtosis-tech/example-microservices/tree/develop/datastore). It is principally for demo purposes, and is published to Dockerhub [here](https://hub.docker.com/repository/docker/kurtosistech/datastore-army-module).
 
-To use it in the [Kurtosis sandbox](https://docs.kurtosistech.com/sandbox.html):
+To run it, use:
 
-```javascript
-loadLambdaResult = await networkCtx.loadLambda("datastore-army-lambda", "kurtosistech/datastore-army-lambda", "{}")
-lambdaCtx = loadLambdaResult.value
-executeResult = await lambdaCtx.execute("{\"numDatastores\":2}") // Replace with the number of datastore services you want
+```
+loadModuleResult = await networkCtx.loadModule("datastore-army-module", "kurtosistech/datastore-army-module", "{}")
+moduleCtx = loadModuleResult.value
+executeResult = await moduleCtx.execute("{\"numDatastores\":2}") // Replace with the number of datastore services you want
 executeResultObj = JSON.parse(executeResult.value)
 console.log(executeResultObj)
 ```

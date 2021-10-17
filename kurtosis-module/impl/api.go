@@ -1,9 +1,9 @@
-package lambda
+package impl
 
-type Params struct {
+type ExecuteParams struct {
 	NumDatastores uint32 `json:"numDatastores"`
 }
 
-type Result struct {
+type ExecuteResult struct {
 	CreatedServiceIdPorts map[string]uint32 `json:"createdServiceIdPorts"`
 }

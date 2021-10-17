@@ -19,7 +19,7 @@ COPY . .
 RUN go test ./...
 
 # Build the application
-RUN GOOS=linux go build -o lambda.bin main.go
+RUN GOOS=linux go build -o kurtosis-module.bin ./kurtosis-module/main.go
 
 # ============= Execution Stage ================
 FROM alpine:3.12 AS execution
@@ -27,11 +27,11 @@ FROM alpine:3.12 AS execution
 WORKDIR /run
 
 # Copy the code into the container
-COPY --from=builder /build/lambda.bin .
+COPY --from=builder /build/kurtosis-module.bin .
 
-# TODO Switch to exec command form, wrapping arguments with double-quote
-CMD ./lambda.bin \
-    --custom-params-json="${CUSTOM_PARAMS_JSON}" \
-    --kurtosis-api-socket="${KURTOSIS_API_SOCKET}" \
-    --log-level="${LOG_LEVEL}"
+# Copy local static files inside the Kurtosis module image
+COPY kurtosis-module/static_files /static-files
+
+# Execute module
+CMD ./kurtosis-module.bin
 

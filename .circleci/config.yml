@@ -3,12 +3,16 @@ version: 2.1
 orbs:
   kurtosis-docs-checker: kurtosis-tech/docs-checker@0.2.0
 
-executors:
-  ubuntu_vm:
-    machine:
-      image: ubuntu-1604:202007-01
-      # DO NOT USE THIS YET! This costs 200 credits *per job run* so is extremely expensive for the free plan, but we can turn it on one day if we get more credits
-      # docker_layer_caching: true
+parameters:
+  # To upgrade the Docker Engine version, see which versions are supported at: https://circleci.com/docs/2.0/building-docker-images/#docker-version
+  docker-engine-version:
+    type: string
+    default: 20.10.7
+  # To upgrade, see: https://hub.docker.com/r/cimg/base/tags
+  circleci-image:
+    type: string
+    default: cimg/base:2021.10
+
 
 # NOTE: Because CircleCI jobs run on separate machines from each other, we duplicate steps (like checkout) between jobs. This is because doing the "correct" DRY
 #  refactoring of, "one job for checkout, one job for build Docker image, etc." would require a) persisting files between jobs and b) persisting Docker images between
@@ -17,7 +21,8 @@ executors:
 # See also: https://discuss.circleci.com/t/can-docker-images-be-preserved-between-jobs-in-a-workflow-without-a-manual-load-save/23388/12
 jobs:
   check_code:
-    executor: ubuntu_vm
+    docker:
+      - image: "<< pipeline.parameters.circleci-image >>"
     steps:
       - checkout
 
@@ -28,13 +33,18 @@ jobs:
             circleci-agent step halt
           fi
 
+      - setup_remote_docker:
+          version: "<< pipeline.parameters.docker-engine-version>>"
       - run: bash ./scripts/build.sh
 
   push_artifacts:
-    executor: ubuntu_vm
+    docker:
+      - image: "<< pipeline.parameters.circleci-image >>"
     steps:
       - checkout
 
+      - setup_remote_docker:
+          version: "<< pipeline.parameters.docker-engine-version>>"
       - run: echo "${DOCKER_PASSWORD}" | docker login -u ${DOCKER_USERNAME} --password-stdin
       - run: bash ./scripts/build.sh
 

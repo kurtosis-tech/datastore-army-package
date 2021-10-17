@@ -1,5 +1,9 @@
 # TBD
 
+# 0.1.2
+### Fixes
+* Add `kurtosistech` org name to image so that CI can publish it to Dockerhub
+
 # 0.1.1
 ### Features
 * Adding CI

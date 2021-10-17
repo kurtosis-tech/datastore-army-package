@@ -11,20 +11,20 @@ const(
 	defaultLogLevel = "info"
 )
 
-type ExampleExecutableKurtosisModuleArgs struct {
+type LoadModuleParams struct {
 	// Indicates the log level for this Kurtosis module implementation
 	LogLevel string `json:"logLevel"`
 }
 
-type ExampleExecutableKurtosisModuleConfigurator struct{}
+type DatastoreArmyKurtosisModuleConfigurator struct{}
 
-func NewExampleExecutableKurtosisModuleConfigurator() *ExampleExecutableKurtosisModuleConfigurator {
-	return &ExampleExecutableKurtosisModuleConfigurator{}
+func NewDatastoreArmyKurtosisModuleConfigurator() *DatastoreArmyKurtosisModuleConfigurator {
+	return &DatastoreArmyKurtosisModuleConfigurator{}
 }
 
-func (t ExampleExecutableKurtosisModuleConfigurator) ParseParamsAndCreateExecutableModule(serializedCustomParamsStr string) (kurtosis_modules.ExecutableKurtosisModule, error) {
+func (configurator DatastoreArmyKurtosisModuleConfigurator) ParseParamsAndCreateExecutableModule(serializedCustomParamsStr string) (kurtosis_modules.ExecutableKurtosisModule, error) {
 	serializedCustomParamsBytes := []byte(serializedCustomParamsStr)
-	var args ExampleExecutableKurtosisModuleArgs
+	var args LoadModuleParams
 	if err := json.Unmarshal(serializedCustomParamsBytes, &args); err != nil {
 		return nil, stacktrace.Propagate(err, "An error occurred deserializing the Kurtosis module serialized custom params with value '%v", serializedCustomParamsStr)
 	}
@@ -34,7 +34,7 @@ func (t ExampleExecutableKurtosisModuleConfigurator) ParseParamsAndCreateExecuta
 		return nil, stacktrace.Propagate(err, "An error occurred setting the log level")
 	}
 
-	module := NewExampleExecutableKurtosisModule()
+	module := NewDatastoreArmyKurtosisModule()
 
 	return module, nil
 }

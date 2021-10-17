@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/kurtosis-tech/kurtosis-module-api-lib/golang/lib/execution"
-	"github.com/kurtosistech/datastore-army-module/kurtosis-module/impl"
+	"github.com/mieubrisse/datastore-army-module/kurtosis-module/impl"
 	"github.com/sirupsen/logrus"
 	"os"
 )
@@ -16,7 +16,7 @@ const (
 func main() {
 
 	// >>>>>>>>>>>>>>>>>>> REPLACE WITH YOUR OWN CONFIGURATOR <<<<<<<<<<<<<<<<<<<<<<<<
-	configurator := impl.NewExampleExecutableKurtosisModuleConfigurator()
+	configurator := impl.NewDatastoreArmyKurtosisModuleConfigurator()
 	// >>>>>>>>>>>>>>>>>>> REPLACE WITH YOUR OWN CONFIGURATOR <<<<<<<<<<<<<<<<<<<<<<<<
 
 

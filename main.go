@@ -8,7 +8,7 @@ import (
 	"github.com/kurtosis-tech/kurtosis-lambda-api-lib/golang/kurtosis_lambda_rpc_api_bindings"
 	"github.com/kurtosis-tech/kurtosis-lambda-api-lib/golang/kurtosis_lambda_rpc_api_consts"
 	"github.com/kurtosis-tech/minimal-grpc-server/server"
-	"github.com/mieubrisse/datastore-army-module/lambda"
+	"github.com/mieubrisse/datastore-army-module/module"
 	"github.com/palantir/stacktrace"
 	"github.com/sirupsen/logrus"
 	"google.golang.org/grpc"
@@ -53,7 +53,7 @@ func runMain() error {
 		kurtosis_lambda_docker_api.ExecutionVolumeMountpoint,
 	)
 
-	lambdaService := lambda.NewLambdaService(networkCtx)
+	lambdaService := module.NewLambdaService(networkCtx)
 	lambdaServiceRegistrationFunc := func(grpcServer *grpc.Server) {
 		kurtosis_lambda_rpc_api_bindings.RegisterLambdaServiceServer(grpcServer, lambdaService)
 	}

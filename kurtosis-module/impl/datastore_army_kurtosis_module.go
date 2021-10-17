@@ -22,7 +22,7 @@ func NewDatastoreArmyKurtosisModule() *DatastoreArmyKurtosisModule {
 	return &DatastoreArmyKurtosisModule{}
 }
 
-func (module DatastoreArmyKurtosisModule) Execute(networkCtx *networks.NetworkContext, serializedParams string) (serializedResult string, resultError error) {
+func (module *DatastoreArmyKurtosisModule) Execute(networkCtx *networks.NetworkContext, serializedParams string) (serializedResult string, resultError error) {
 	params := new(ExecuteParams)
 	if err := json.Unmarshal([]byte(serializedParams), params); err != nil {
 		return "", stacktrace.Propagate(err, "An error occurred unmarshalling the params JSON")

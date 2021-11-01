@@ -9,7 +9,7 @@ import (
 )
 
 const (
-	datastoreImage = "kurtosistech/example-microservices_datastore"
+	datastoreImage = "kurtosistech/example-datastore-server"
 	datastorePortNumber uint32 = 1323
 	datastoreProtocol = "tcp"
 )

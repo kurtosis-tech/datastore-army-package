@@ -1,4 +1,6 @@
 # TBD
+
+# 0.1.5
 ### Changes
 * Replaced `kurtosistech/example-microservices_datastore` with the newest `kurtosistech/example-datastore-server` datastore image which implements GRPC
 

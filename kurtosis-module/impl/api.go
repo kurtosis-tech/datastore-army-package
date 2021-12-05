@@ -5,5 +5,5 @@ type ExecuteParams struct {
 }
 
 type ExecuteResult struct {
-	CreatedServiceIdPorts map[string]uint32 `json:"createdServiceIdPorts"`
+	CreatedServiceIdsToPortIds map[string]string `json:"createdServiceIdsToPortIds"`
 }

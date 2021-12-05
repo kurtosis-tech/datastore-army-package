@@ -3,16 +3,18 @@ package impl
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/kurtosis-tech/kurtosis-client/golang/lib/networks"
-	"github.com/kurtosis-tech/kurtosis-client/golang/lib/services"
-	"github.com/palantir/stacktrace"
+	"github.com/kurtosis-tech/kurtosis-core-api-lib/api/golang/lib/enclaves"
+	"github.com/kurtosis-tech/kurtosis-core-api-lib/api/golang/lib/services"
+	"github.com/kurtosis-tech/stacktrace"
 )
 
 const (
 	datastoreImage = "kurtosistech/example-datastore-server"
-	datastorePortNumber uint32 = 1323
-	datastoreProtocol = "tcp"
+
+	datastorePortId = "grpc"
+	datastorePortNum = uint16(1323)
 )
+var datastorePortSpec = services.NewPortSpec(datastorePortNum, services.PortProtocol_TCP)
 
 type DatastoreArmyKurtosisModule struct {
 	numDatstoresAdded int
@@ -22,22 +24,22 @@ func NewDatastoreArmyKurtosisModule() *DatastoreArmyKurtosisModule {
 	return &DatastoreArmyKurtosisModule{}
 }
 
-func (module *DatastoreArmyKurtosisModule) Execute(networkCtx *networks.NetworkContext, serializedParams string) (serializedResult string, resultError error) {
+func (module *DatastoreArmyKurtosisModule) Execute(enclaveCtx *enclaves.EnclaveContext, serializedParams string) (serializedResult string, resultError error) {
 	params := new(ExecuteParams)
 	if err := json.Unmarshal([]byte(serializedParams), params); err != nil {
 		return "", stacktrace.Propagate(err, "An error occurred unmarshalling the params JSON")
 	}
 
-	createdServiceIdPorts := map[string]uint32{}
+	createdServiceIdsToPortIds := map[string]string{}
 	for i := uint32(0); i < params.NumDatastores; i++ {
-		serviceId, err := module.addDatastoreService(networkCtx)
+		serviceId, err := module.addDatastoreService(enclaveCtx)
 		if err != nil {
 			return "", stacktrace.Propagate(err, "An error occurred adding a datastore service")
 		}
-		createdServiceIdPorts[string(serviceId)] = datastorePortNumber
+		createdServiceIdsToPortIds[string(serviceId)] = datastorePortId
 	}
 	resultObj := ExecuteResult{
-		CreatedServiceIdPorts: createdServiceIdPorts,
+		CreatedServiceIdsToPortIds: createdServiceIdsToPortIds,
 	}
 	resultJsonBytes, err := json.Marshal(resultObj)
 	if err != nil {
@@ -49,12 +51,12 @@ func (module *DatastoreArmyKurtosisModule) Execute(networkCtx *networks.NetworkC
 // ====================================================================================================
 //                                       Private helper functions
 // ====================================================================================================
-func (module *DatastoreArmyKurtosisModule) addDatastoreService(networkCtx *networks.NetworkContext) (services.ServiceID, error) {
+func (module *DatastoreArmyKurtosisModule) addDatastoreService(enclaveCtx *enclaves.EnclaveContext) (services.ServiceID, error) {
 	nextDatastoreServiceId := services.ServiceID(fmt.Sprintf("datastore-%v", module.numDatstoresAdded))
 
 	datastoreContainerConfigSupplier := getDatastoreContainerConfigSupplier()
 
-	if _, _, err := networkCtx.AddService(nextDatastoreServiceId, datastoreContainerConfigSupplier); err != nil {
+	if _, err := enclaveCtx.AddService(nextDatastoreServiceId, datastoreContainerConfigSupplier); err != nil {
 		return "", stacktrace.Propagate(err, "An error occurred adding datastore service '%v'", nextDatastoreServiceId)
 	}
 	module.numDatstoresAdded = module.numDatstoresAdded + 1
@@ -66,9 +68,9 @@ func getDatastoreContainerConfigSupplier() func(ipAddr string, sharedDirectory *
 	containerConfigSupplier  := func(ipAddr string, sharedDirectory *services.SharedPath) (*services.ContainerConfig, error) {
 		containerConfig := services.NewContainerConfigBuilder(
 			datastoreImage,
-		).WithUsedPorts(
-			map[string]bool{fmt.Sprintf("%v/%v", datastorePortNumber, datastoreProtocol): true},
-		).Build()
+		).WithUsedPorts(map[string]*services.PortSpec{
+			datastorePortId: datastorePortSpec,
+		}).Build()
 		return containerConfig, nil
 	}
 	return containerConfigSupplier

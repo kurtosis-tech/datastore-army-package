@@ -1,5 +1,13 @@
 # TBD
 
+# 0.2.0
+### Changes
+* Upgrade to module-api-lib 0.12.2 which supports the latest Kurt Core
+
+### Breaking Changes
+* The returned object now contains a mapping of `datastore_service_id` -> `datastore_port_id`, so the user can retrieve or public or private ports as they please
+    * Users should swap the old `createdServiceIdPorts` property -> `createdServiceIdsToPortIds`
+
 # 0.1.5
 ### Changes
 * Replaced `kurtosistech/example-microservices_datastore` with the newest `kurtosistech/example-datastore-server` datastore image which implements GRPC

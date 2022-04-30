@@ -1,5 +1,9 @@
 # TBD
 
+# 0.2.1
+### Changes
+* Upgrade to module-api-lib 0.14.1
+
 # 0.2.0
 ### Changes
 * Upgrade to module-api-lib 0.12.2 which supports the latest Kurt Core

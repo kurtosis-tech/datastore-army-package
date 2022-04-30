@@ -11,9 +11,10 @@ import (
 const (
 	datastoreImage = "kurtosistech/example-datastore-server"
 
-	datastorePortId = "grpc"
+	datastorePortId  = "grpc"
 	datastorePortNum = uint16(1323)
 )
+
 var datastorePortSpec = services.NewPortSpec(datastorePortNum, services.PortProtocol_TCP)
 
 type DatastoreArmyKurtosisModule struct {
@@ -63,9 +64,8 @@ func (module *DatastoreArmyKurtosisModule) addDatastoreService(enclaveCtx *encla
 	return nextDatastoreServiceId, nil
 }
 
-
-func getDatastoreContainerConfigSupplier() func(ipAddr string, sharedDirectory *services.SharedPath) (*services.ContainerConfig, error) {
-	containerConfigSupplier  := func(ipAddr string, sharedDirectory *services.SharedPath) (*services.ContainerConfig, error) {
+func getDatastoreContainerConfigSupplier() func(ipAddr string) (*services.ContainerConfig, error) {
+	containerConfigSupplier := func(ipAddr string) (*services.ContainerConfig, error) {
 		containerConfig := services.NewContainerConfigBuilder(
 			datastoreImage,
 		).WithUsedPorts(map[string]*services.PortSpec{

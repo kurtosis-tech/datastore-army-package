@@ -1,5 +1,10 @@
 # TBD
 
+# 0.2.4
+### Changes
+* Upgrade to module-api-lib 0.17.0
+* Upgrade to core 1.55.2
+
 # 0.2.3
 ### Changes
 * Upgrade to module-api-lib 0.16.0 and core 1.54.1

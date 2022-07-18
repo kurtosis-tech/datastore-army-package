@@ -24,6 +24,12 @@ jobs:
     docker:
       - image: "<< pipeline.parameters.circleci-image >>"
     steps:
+      # Install Kudet
+      - run: |
+          echo "deb [trusted=yes] https://apt.fury.io/kurtosis-tech/ /" | sudo tee /etc/apt/sources.list.d/kurtosis.list
+          sudo apt update
+          sudo apt install kudet
+
       - checkout
 
       # If the only changes are to the docs, don't run the slow (and expensive) code checks

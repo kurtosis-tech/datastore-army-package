@@ -1,5 +1,7 @@
 # TBD
 
+# 0.2.5
+
 ### Changes
 * Migrate repo to use internal cli tool `kudet`, for updating release workflow
 

@@ -1,5 +1,8 @@
 # TBD
 
+### Changes
+* Migrate repo to use internal cli tool `kudet`, for updating release workflow
+
 # 0.2.4
 ### Changes
 * Upgrade to module-api-lib 0.17.0

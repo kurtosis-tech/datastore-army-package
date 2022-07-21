@@ -1,7 +1,8 @@
 # TBD
+### Features
+* Added CircleCi workflow for running a scheduled pipeline every day to control successful module execution 
 
 # 0.2.5
-
 ### Changes
 * Migrate repo to use internal cli tool `kudet`, for updating release workflow
 

@@ -7,11 +7,14 @@ parameters:
   # To upgrade the Docker Engine version, see which versions are supported at: https://circleci.com/docs/2.0/building-docker-images/#docker-version
   docker-engine-version:
     type: string
-    default: 20.10.7
+    default: 20.10.14
   # To upgrade, see: https://hub.docker.com/r/cimg/base/tags
   circleci-image:
     type: string
     default: cimg/base:2021.10
+  check-module-execution-enable:
+    type: boolean
+    default: false
 
 
 # NOTE: Because CircleCI jobs run on separate machines from each other, we duplicate steps (like checkout) between jobs. This is because doing the "correct" DRY
@@ -20,6 +23,19 @@ parameters:
 #  images), so we run everything inside a single job.
 # See also: https://discuss.circleci.com/t/can-docker-images-be-preserved-between-jobs-in-a-workflow-without-a-manual-load-save/23388/12
 jobs:
+  check_module_execution:
+    docker:
+      - image: "<< pipeline.parameters.circleci-image >>"
+    steps:
+      - setup_remote_docker:
+          version: "<< pipeline.parameters.docker-engine-version>>"
+      - run: |
+          echo "deb [trusted=yes] https://apt.fury.io/kurtosis-tech/ /" | sudo tee /etc/apt/sources.list.d/kurtosis.list
+          sudo apt update
+          sudo apt install kurtosis-cli
+          kurtosis config init dont-send-metrics
+          kurtosis module exec 'kurtosistech/datastore-army-module:latest' --execute-params '{"numDatastores":2}'
+
   check_code:
     docker:
       - image: "<< pipeline.parameters.circleci-image >>"
@@ -72,6 +88,12 @@ jobs:
           docker push "${image_name_no_version}"
 
 workflows:
+  check_execution:
+    when:
+      and:
+        - << pipeline.parameters.check-module-execution-enable >>
+    jobs:
+      - check_module_execution
   build:
     jobs:
       # -- PR check jobs ------------------------------------------

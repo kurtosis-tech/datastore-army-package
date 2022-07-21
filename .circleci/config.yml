@@ -17,9 +17,12 @@ parameters:
   circleci-image:
     type: string
     default: cimg/base:2021.10
-  check-module-execution-enable:
+  enable-check-execution-workflow:
     type: boolean
     default: false
+  enable-build-workflow:
+    type: boolean
+    default: true
 
 
 # NOTE: Because CircleCI jobs run on separate machines from each other, we duplicate steps (like checkout) between jobs. This is because doing the "correct" DRY
@@ -93,15 +96,11 @@ jobs:
 
 workflows:
   check_execution:
-    when:
-      and:
-        - << pipeline.parameters.check-module-execution-enable >>
+    when: << pipeline.parameters.enable-check-execution-workflow >>
     jobs:
       - check_module_execution
   build:
-    when:
-      or:
-        - << pipeline.parameters.check-module-execution-enable >>
+    when: << pipeline.parameters.enable-build-workflow >>
     jobs:
       # -- PR check jobs ------------------------------------------
       - kurtosis-docs-checker/check-docs:

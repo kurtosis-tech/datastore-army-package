@@ -95,6 +95,9 @@ workflows:
     jobs:
       - check_module_execution
   build:
+    when:
+      or:
+        - << pipeline.parameters.check-module-execution-enable >>
     jobs:
       # -- PR check jobs ------------------------------------------
       - kurtosis-docs-checker/check-docs:

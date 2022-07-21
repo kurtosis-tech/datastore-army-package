@@ -3,6 +3,11 @@ version: 2.1
 orbs:
   kurtosis-docs-checker: kurtosis-tech/docs-checker@0.2.1
 
+executors:
+  ubuntu_vm:
+    machine:
+      image: ubuntu-2204:2022.04.2
+
 parameters:
   # To upgrade the Docker Engine version, see which versions are supported at: https://circleci.com/docs/2.0/building-docker-images/#docker-version
   docker-engine-version:
@@ -24,11 +29,8 @@ parameters:
 # See also: https://discuss.circleci.com/t/can-docker-images-be-preserved-between-jobs-in-a-workflow-without-a-manual-load-save/23388/12
 jobs:
   check_module_execution:
-    docker:
-      - image: "<< pipeline.parameters.circleci-image >>"
+    executor: ubuntu_vm
     steps:
-      - setup_remote_docker:
-          version: "<< pipeline.parameters.docker-engine-version>>"
       - run: |
           echo "deb [trusted=yes] https://apt.fury.io/kurtosis-tech/ /" | sudo tee /etc/apt/sources.list.d/kurtosis.list
           sudo apt update

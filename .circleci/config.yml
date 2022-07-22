@@ -3,15 +3,28 @@ version: 2.1
 orbs:
   kurtosis-docs-checker: kurtosis-tech/docs-checker@0.2.1
 
+executors:
+  ubuntu_vm:
+    machine:
+      image: ubuntu-2204:2022.04.2
+
 parameters:
   # To upgrade the Docker Engine version, see which versions are supported at: https://circleci.com/docs/2.0/building-docker-images/#docker-version
   docker-engine-version:
     type: string
-    default: 20.10.7
+    default: 20.10.14 # Upgraded because the version 20.10.7 contains a Docker version that contains a runc version which have an issue that was fixed on this new version
   # To upgrade, see: https://hub.docker.com/r/cimg/base/tags
   circleci-image:
     type: string
     default: cimg/base:2021.10
+  # To enable/disabled the check_latest_version workflow execution which will be triggered by this scheduled pipeline: https://app.circleci.com/settings/project/github/kurtosis-tech/datastore-army-module/triggers?return-to=https%3A%2F%2Fapp.circleci.com%2Fpipelines%2Fgithub%2Fkurtosis-tech%2Fdatastore-army-module&triggerSource=&scheduledTriggerId=e100cb91-ffb5-42c9-8cf3-7dac0099dfaf&success=true
+  should-enable-check-latest-version-workflow:
+    type: boolean
+    default: false
+  # To enable/disabled the check_latest_version workflow execution which will be triggered by the PR's checkers
+  should-enable-build-workflow:
+    type: boolean
+    default: true
 
 
 # NOTE: Because CircleCI jobs run on separate machines from each other, we duplicate steps (like checkout) between jobs. This is because doing the "correct" DRY
@@ -20,6 +33,18 @@ parameters:
 #  images), so we run everything inside a single job.
 # See also: https://discuss.circleci.com/t/can-docker-images-be-preserved-between-jobs-in-a-workflow-without-a-manual-load-save/23388/12
 jobs:
+  check_module_execution:
+    executor: ubuntu_vm
+    steps:
+      - run: |
+          echo "deb [trusted=yes] https://apt.fury.io/kurtosis-tech/ /" | sudo tee /etc/apt/sources.list.d/kurtosis.list
+          sudo apt update
+          sudo apt install kurtosis-cli
+          kurtosis config init dont-send-metrics
+          kurtosis cluster set docker
+          kurtosis engine start
+          kurtosis module exec 'kurtosistech/datastore-army-module:latest' --execute-params '{"numDatastores":2}'
+
   check_code:
     docker:
       - image: "<< pipeline.parameters.circleci-image >>"
@@ -72,7 +97,12 @@ jobs:
           docker push "${image_name_no_version}"
 
 workflows:
+  check_latest_version:
+    when: << pipeline.parameters.should-enable-check-latest-version-workflow >>
+    jobs:
+      - check_module_execution
   build:
+    when: << pipeline.parameters.should-enable-build-workflow >>
     jobs:
       # -- PR check jobs ------------------------------------------
       - kurtosis-docs-checker/check-docs:

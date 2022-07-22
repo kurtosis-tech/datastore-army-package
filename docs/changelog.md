@@ -1,6 +1,7 @@
 # TBD
 ### Features
-* Added CircleCi workflow for running a scheduled pipeline every day to control successful module execution 
+* Added CircleCi workflow for running a scheduled pipeline every day to control successful module execution
+* Added slack orb in the CircleCi config file to notify when the `check_module_execution` job fails
 
 # 0.2.5
 ### Changes

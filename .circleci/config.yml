@@ -2,6 +2,7 @@ version: 2.1
 
 orbs:
   kurtosis-docs-checker: kurtosis-tech/docs-checker@0.2.1
+  slack: circleci/slack@4.10.1
 
 executors:
   ubuntu_vm:
@@ -44,6 +45,11 @@ jobs:
           kurtosis cluster set docker
           kurtosis engine start
           kurtosis module exec 'kurtosistech/datastore-army-module:latest' --execute-params '{"numDatastores":2}'
+      - slack/notify:
+          channel: engineering
+          event: fail
+          # You can preview this template and know more about templates here: https://github.com/CircleCI-Public/slack-orb/wiki#templates
+          template: basic_fail_1
 
   check_code:
     docker:
@@ -100,7 +106,9 @@ workflows:
   check_latest_version:
     when: << pipeline.parameters.should-enable-check-latest-version-workflow >>
     jobs:
-      - check_module_execution
+      - check_module_execution:
+          context:
+            - slack-secrets
   build:
     when: << pipeline.parameters.should-enable-build-workflow >>
     jobs:

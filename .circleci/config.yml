@@ -106,9 +106,9 @@ workflows:
   check_latest_version:
     when: << pipeline.parameters.should-enable-check-latest-version-workflow >>
     jobs:
-      - check_module_execution
-        context:
-          - slack-secrets
+      - check_module_execution:
+          context:
+            - slack-secrets
   build:
     when: << pipeline.parameters.should-enable-build-workflow >>
     jobs:

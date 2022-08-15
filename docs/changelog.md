@@ -4,9 +4,12 @@
 * Upgrade to core 1.57.3
 * Upgrade to module-api-lib 0.19.0
 
+# 0.2.6
+### Features
+* Added CircleCi workflow for running a scheduled pipeline every day to control successful module execution
+* Added slack orb in the CircleCi config file to notify when the `check_module_execution` job fails
 
 # 0.2.5
-
 ### Changes
 * Migrate repo to use internal cli tool `kudet`, for updating release workflow
 * Upgrade to module-api-lib 0.18.0

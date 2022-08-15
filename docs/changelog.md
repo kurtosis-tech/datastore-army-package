@@ -1,5 +1,7 @@
 # TBD
 
+# 0.2.7
+
 # 0.2.6
 ### Features
 * Added CircleCi workflow for running a scheduled pipeline every day to control successful module execution

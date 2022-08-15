@@ -4,6 +4,8 @@
 * Upgrade to core 1.57.3
 * Upgrade to module-api-lib 0.19.0
 
+# 0.2.7
+
 # 0.2.6
 ### Features
 * Added CircleCi workflow for running a scheduled pipeline every day to control successful module execution

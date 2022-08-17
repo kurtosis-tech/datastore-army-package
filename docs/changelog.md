@@ -1,6 +1,9 @@
 # TBD
+
 ### Changes
 * Downgrade Kurtosis dependencies core to 1.57.0 and module-api-lib to 0.18.0 due the incompatibility with the latest Kurtosis CLI release
+* Upgrade core to 1.57.6
+* Upgrade module-api-lib 0.20.0
 
 # 0.2.8
 ### Changes 

@@ -50,28 +50,27 @@ func (module *DatastoreArmyKurtosisModule) Execute(enclaveCtx *enclaves.EnclaveC
 }
 
 // ====================================================================================================
-//                                       Private helper functions
+//
+//	Private helper functions
+//
 // ====================================================================================================
 func (module *DatastoreArmyKurtosisModule) addDatastoreService(enclaveCtx *enclaves.EnclaveContext) (services.ServiceID, error) {
 	nextDatastoreServiceId := services.ServiceID(fmt.Sprintf("datastore-%v", module.numDatstoresAdded))
 
-	datastoreContainerConfigSupplier := getDatastoreContainerConfigSupplier()
+	datastoreContainerConfig := getDatastoreContainerConfig()
 
-	if _, err := enclaveCtx.AddService(nextDatastoreServiceId, datastoreContainerConfigSupplier); err != nil {
+	if _, err := enclaveCtx.AddService(nextDatastoreServiceId, datastoreContainerConfig); err != nil {
 		return "", stacktrace.Propagate(err, "An error occurred adding datastore service '%v'", nextDatastoreServiceId)
 	}
 	module.numDatstoresAdded = module.numDatstoresAdded + 1
 	return nextDatastoreServiceId, nil
 }
 
-func getDatastoreContainerConfigSupplier() func(ipAddr string) (*services.ContainerConfig, error) {
-	containerConfigSupplier := func(ipAddr string) (*services.ContainerConfig, error) {
-		containerConfig := services.NewContainerConfigBuilder(
-			datastoreImage,
-		).WithUsedPorts(map[string]*services.PortSpec{
-			datastorePortId: datastorePortSpec,
-		}).Build()
-		return containerConfig, nil
-	}
-	return containerConfigSupplier
+func getDatastoreContainerConfig() func(ipAddr string) (*services.ContainerConfig, error) {
+	containerConfig := services.NewContainerConfigBuilder(
+		datastoreImage,
+	).WithUsedPorts(map[string]*services.PortSpec{
+		datastorePortId: datastorePortSpec,
+	}).Build()
+	return containerConfig
 }

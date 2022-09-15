@@ -50,8 +50,7 @@ func (module *DatastoreArmyKurtosisModule) Execute(enclaveCtx *enclaves.EnclaveC
 }
 
 // ====================================================================================================
-//
-//	Private helper functions
+//                                       Private helper functions
 //
 // ====================================================================================================
 func (module *DatastoreArmyKurtosisModule) addDatastoreService(enclaveCtx *enclaves.EnclaveContext) (services.ServiceID, error) {

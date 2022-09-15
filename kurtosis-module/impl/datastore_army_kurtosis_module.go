@@ -66,7 +66,7 @@ func (module *DatastoreArmyKurtosisModule) addDatastoreService(enclaveCtx *encla
 	return nextDatastoreServiceId, nil
 }
 
-func getDatastoreContainerConfig() func(ipAddr string) (*services.ContainerConfig, error) {
+func getDatastoreContainerConfig() *services.ContainerConfig {
 	containerConfig := services.NewContainerConfigBuilder(
 		datastoreImage,
 	).WithUsedPorts(map[string]*services.PortSpec{

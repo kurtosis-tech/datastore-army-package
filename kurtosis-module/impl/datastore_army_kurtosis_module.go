@@ -44,13 +44,14 @@ func (module *DatastoreArmyKurtosisModule) Execute(enclaveCtx *enclaves.EnclaveC
 	}
 	resultJsonBytes, err := json.Marshal(resultObj)
 	if err != nil {
-		return "", stacktrace.Propagate(err, "An error occurred serialzing the Lambda result object to JSON")
+		return "", stacktrace.Propagate(err, "An error occurred serializing the Lambda result object to JSON")
 	}
 	return string(resultJsonBytes), nil
 }
 
 // ====================================================================================================
-//                                       Private helper functions
+//
+//	Private helper functions
 //
 // ====================================================================================================
 func (module *DatastoreArmyKurtosisModule) addDatastoreService(enclaveCtx *enclaves.EnclaveContext) (services.ServiceID, error) {

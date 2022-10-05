@@ -7,7 +7,7 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-const(
+const (
 	defaultLogLevel = "info"
 )
 

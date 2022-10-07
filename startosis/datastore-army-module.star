@@ -1,19 +1,20 @@
 #vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv PARAMETERS vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv#
 
-num_datastores = 3
+NUM_DATASTORES = 3
 
 #^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ END OF PARAMETERS ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^#
 
 
 #vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv STATIC CONST vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv#
 
-module_name_for_logging = "datastore_army_module"
+MODULE_NAME_FOR_LOGGING = "datastore_army_module"
 
-datastore_image = "kurtosistech/example-datastore-server"
-datastore_port_id = "grpc"
-datastore_port_number = 1323
+DATASTORE_IMAGE = "kurtosistech/example-datastore-server"
+DATASTORE_PORT_ID = "grpc"
+DATASTORE_PORT_NUMBER = 1323
+DATASTORE_PORT_PROTOCOL = "TCP"
 
-service_id_prefix = "datastore-"
+SERVICE_ID_PREFIX = "datastore-"
 
 #^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ END OF STATIC CONST ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^#
 
@@ -24,20 +25,20 @@ def add_datastore_service(unique_service_id):
     print("Adding service " + unique_service_id)
 
     service_config = struct(
-        container_image_name = datastore_image,
+        container_image_name = DATASTORE_IMAGE,
         used_ports = {
-            datastore_port_id: struct(number = datastore_port_number, protocol = "TCP")
+            DATASTORE_PORT_ID: struct(number = DATASTORE_PORT_NUMBER, protocol = DATASTORE_PORT_PROTOCOL)
         }
     )
     add_service(service_id = unique_service_id, service_config = service_config)
 
-def add_multiple_datastore_services(num_datastores):
-    for i in range(num_datastores):
-        service_id = service_id_prefix + str(i)
+def add_multiple_datastore_services(num_services):
+    for index in range(num_services):
+        service_id = SERVICE_ID_PREFIX + str(index)
         add_datastore_service(service_id)
 
-print("Deploying module " + module_name_for_logging)
+print("Deploying module " + MODULE_NAME_FOR_LOGGING)
 
-add_multiple_datastore_services(num_datastores)
+add_multiple_datastore_services(NUM_DATASTORES)
 
-print("Module " + module_name_for_logging + " deployed successfully.")
+print("Module " + MODULE_NAME_FOR_LOGGING + " deployed successfully.")

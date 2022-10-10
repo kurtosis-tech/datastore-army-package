@@ -1,5 +1,9 @@
 # TBD
 
+### Features
+* Add a Startosis script "replacing" the module. One thing still missing is the ability to pass parameters to the 
+Startosis script (for the Go module, we can pass the number of datastore nodes).
+
 # 0.2.14
 
 ### Changes

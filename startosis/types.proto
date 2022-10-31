@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+message ModuleInput {
+  uint32 num_datastores = 1;
+}
+
+message ModuleOutput {
+  repeated DatastoreDescription deployed_datastores = 1;
+}
+
+message DatastoreDescription {
+  string service_id = 1;
+  string port_id = 2;
+}

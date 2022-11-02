@@ -44,7 +44,24 @@ jobs:
           kurtosis config init dont-send-metrics
           kurtosis cluster set docker
           kurtosis engine start
-          kurtosis module exec 'kurtosistech/datastore-army-module:latest' --execute-params '{"numDatastores":2}'
+          kurtosis startosis exec "${PWD}/startosis" --args '{"num_datastore": 2}'
+      - slack/notify:
+          channel: engineering
+          event: fail
+          # You can preview this template and know more about templates here: https://github.com/CircleCI-Public/slack-orb/wiki#templates
+          template: basic_fail_1
+
+  check_execution:
+    executor: ubuntu_vm
+    steps:
+      - run: |
+          echo "deb [trusted=yes] https://apt.fury.io/kurtosis-tech/ /" | sudo tee /etc/apt/sources.list.d/kurtosis.list
+          sudo apt update
+          sudo apt install kurtosis-cli
+          kurtosis config init dont-send-metrics
+          kurtosis cluster set docker
+          kurtosis engine start
+          kurtosis startosis exec "${PWD}/startosis" --args '{"num_datastore": 2}'
       - slack/notify:
           channel: engineering
           event: fail
@@ -107,6 +124,9 @@ workflows:
     when: << pipeline.parameters.should-enable-check-latest-version-workflow >>
     jobs:
       - check_module_execution:
+          context:
+            - slack-secrets
+      - check_execution:
           context:
             - slack-secrets
   build:

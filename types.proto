@@ -1,11 +1,11 @@
 syntax = "proto3";
 
 message ModuleInput {
-	int32 num_datastores = 1;
+	optional int32 num_datastores = 1;
 }
 
 message ModuleOutput {
-	repeated ServiceIdPortId deployed_datastores = 1;
+	repeated ServiceIdPortId created_service_ids_to_port_ids = 1;
 }
 
 message ServiceIdPortId {

@@ -6,3 +6,7 @@
 
 # VS Code
 *.vscode
+
+# Mac spotlight index files
+.DS_Store
+

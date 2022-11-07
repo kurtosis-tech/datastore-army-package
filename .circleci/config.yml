@@ -10,14 +10,6 @@ executors:
       image: ubuntu-2204:2022.04.2
 
 parameters:
-  # To upgrade the Docker Engine version, see which versions are supported at: https://circleci.com/docs/2.0/building-docker-images/#docker-version
-  docker-engine-version:
-    type: string
-    default: 20.10.14 # Upgraded because the version 20.10.7 contains a Docker version that contains a runc version which have an issue that was fixed on this new version
-  # To upgrade, see: https://hub.docker.com/r/cimg/base/tags
-  circleci-image:
-    type: string
-    default: cimg/base:2021.10
   # To enable/disabled the check_latest_version workflow execution which will be triggered by this scheduled pipeline: https://app.circleci.com/settings/project/github/kurtosis-tech/datastore-army-module/triggers?return-to=https%3A%2F%2Fapp.circleci.com%2Fpipelines%2Fgithub%2Fkurtosis-tech%2Fdatastore-army-module&triggerSource=&scheduledTriggerId=e100cb91-ffb5-42c9-8cf3-7dac0099dfaf&success=true
   should-enable-check-latest-version-workflow:
     type: boolean
@@ -34,7 +26,8 @@ parameters:
 #  images), so we run everything inside a single job.
 # See also: https://discuss.circleci.com/t/can-docker-images-be-preserved-between-jobs-in-a-workflow-without-a-manual-load-save/23388/12
 jobs:
-  check_module_execution:
+
+  check_execution:
     executor: ubuntu_vm
     steps:
       - run: |
@@ -44,7 +37,12 @@ jobs:
           kurtosis config init dont-send-metrics
           kurtosis cluster set docker
           kurtosis engine start
-          kurtosis module exec 'kurtosistech/datastore-army-module:latest' --execute-params '{"numDatastores":2}'
+
+      - checkout
+
+      - run: |
+          kurtosis startosis exec "${PWD}" --args '{"num_datastores": 2}'
+
       - slack/notify:
           channel: engineering
           event: fail
@@ -52,16 +50,13 @@ jobs:
           template: basic_fail_1
 
   check_code:
-    docker:
-      - image: "<< pipeline.parameters.circleci-image >>"
+    executor: ubuntu_vm
     steps:
       # Install Kudet
       - run: |
           echo "deb [trusted=yes] https://apt.fury.io/kurtosis-tech/ /" | sudo tee /etc/apt/sources.list.d/kurtosis.list
           sudo apt update
           sudo apt install kudet
-
-      - checkout
 
       # If the only changes are to the docs, don't run the slow (and expensive) code checks
       # `git diff --exit-code` returns 0 exit code if no changes, and 1 if changes
@@ -70,43 +65,26 @@ jobs:
             circleci-agent step halt
           fi
 
-      - setup_remote_docker:
-          version: "<< pipeline.parameters.docker-engine-version>>"
-      - run: bash ./scripts/build.sh
-
-  push_artifacts:
-    docker:
-      - image: "<< pipeline.parameters.circleci-image >>"
-    steps:
-      # Install Kudet
       - run: |
           echo "deb [trusted=yes] https://apt.fury.io/kurtosis-tech/ /" | sudo tee /etc/apt/sources.list.d/kurtosis.list
           sudo apt update
-          sudo apt install kudet
+          sudo apt install kurtosis-cli
+          kurtosis config init dont-send-metrics
+          kurtosis cluster set docker
+          kurtosis engine start
 
       - checkout
 
-      - setup_remote_docker:
-          version: "<< pipeline.parameters.docker-engine-version>>"
-      - run: echo "${DOCKER_PASSWORD}" | docker login -u ${DOCKER_USERNAME} --password-stdin
-      - run: bash ./scripts/build.sh
-
+      # When we have preview available for Kurtosis scripts switch that to preview only
+      # as we only want to check the the code compiles
       - run: |
-          set -euo pipefail
-          source scripts/_constants.env
-          version_to_publish="$(kudet get-docker-tag)"
-          echo "Version that will be published: ${version_to_publish}"
-          image_name_with_version="${IMAGE_ORG_AND_REPO}:${version_to_publish}"
-          image_name_no_version="${IMAGE_ORG_AND_REPO}:latest"
-          docker tag "${image_name_with_version}" "${image_name_no_version}"
-          docker push "${image_name_with_version}"
-          docker push "${image_name_no_version}"
+          kurtosis startosis exec "${PWD}" --args '{"num_datastores": 2}'
 
 workflows:
   check_latest_version:
     when: << pipeline.parameters.should-enable-check-latest-version-workflow >>
     jobs:
-      - check_module_execution:
+      - check_execution:
           context:
             - slack-secrets
   build:
@@ -125,14 +103,3 @@ workflows:
               ignore:
                 - master
       # -- End PR check jobs ---------------------------------------
-
-      # -- Artifact-publishing jobs --------------------------------
-      - push_artifacts:
-          context:
-            - docker-user
-          filters:
-            branches:
-              ignore: /.*/
-            tags: 
-              only: /^[0-9]+\.[0-9]+\.[0-9]+$/
-      # -- End artifact-publishing jobs ----------------------------

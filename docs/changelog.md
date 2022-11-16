@@ -6,7 +6,7 @@
 ### Features
 * Add a Startosis script "replacing" the module. One thing still missing is the ability to pass parameters to the 
 Startosis script (for the Go module, we can pass the number of datastore nodes).
-* Uses the new snytax for parts of add_service
+* Uses the new syntax for parts of add_service
 
 # 0.2.14
 

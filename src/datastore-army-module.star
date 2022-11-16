@@ -12,12 +12,12 @@ def add_datastore_service(unique_service_id):
     print("Adding service " + unique_service_id)
 
     service_config = struct(
-        container_image_name = DATASTORE_IMAGE,
-        used_ports = {
+        image = DATASTORE_IMAGE,
+        ports = {
             DATASTORE_PORT_ID: struct(number = DATASTORE_PORT_NUMBER, protocol = DATASTORE_PORT_PROTOCOL)
         }
     )
-    add_service(service_id = unique_service_id, service_config = service_config)
+    add_service(service_id = unique_service_id, config = service_config)
     return DATASTORE_PORT_ID
 
 

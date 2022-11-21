@@ -1,4 +1,4 @@
-load('github.com/kurtosis-tech/datastore-army-module/src/helpers.star', convert_output="convert_output")
+helpers = import_module('github.com/kurtosis-tech/datastore-army-module/src/helpers.star')
 
 
 DATASTORE_IMAGE = "kurtosistech/example-datastore-server"
@@ -27,4 +27,4 @@ def add_multiple_datastore_services(num_datastores):
         service_id = SERVICE_ID_PREFIX + str(index)
         service_id_to_port_id[service_id] = add_datastore_service(service_id)
 
-    return convert_output(service_id_to_port_id)
+    return helpers.convert_output(service_id_to_port_id)

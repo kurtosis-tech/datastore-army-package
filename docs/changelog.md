@@ -1,4 +1,6 @@
 # TBD
+### Changes
+- Renamed `kurtosis.mod` file to the new `kurtosis.yml` file format
 
 ### Changes
 - Replace `load()` with `import_module`

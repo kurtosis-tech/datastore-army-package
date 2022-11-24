@@ -2,6 +2,7 @@
 
 ### Changes
 - Replace `load()` with `import_module`
+- Replaced the old `main` with `run` in main.star
 
 ### Fix
 - Fix CI following the removal of `startosis` in `kurtosis startosis exec ...`

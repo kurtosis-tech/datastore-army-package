@@ -4,7 +4,7 @@ helpers = import_module('github.com/kurtosis-tech/datastore-army-module/src/help
 MODULE_NAME_FOR_LOGGING = "datastore_army_module"
 
 
-def main(input_args):
+def run(input_args):
     print("Deploying module " + MODULE_NAME_FOR_LOGGING + " with args:")
     print(input_args)
     helpers.apply_default_to_input_args(input_args)

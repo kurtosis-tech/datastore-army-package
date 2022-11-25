@@ -6,6 +6,7 @@
 
 ### Fix
 - Fix CI following the removal of `startosis` in `kurtosis startosis exec ...`
+- Fix CI following the change of `run` in `kurtosis run ...`
 
 ### Breaking changes
 - Switch module to be 100% implemented in Startosis.

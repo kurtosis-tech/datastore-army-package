@@ -7,12 +7,13 @@ MODULE_NAME_FOR_LOGGING = "datastore_army_module"
 def run(input_args):
     print("Deploying module " + MODULE_NAME_FOR_LOGGING + " with args:")
     print(input_args)
-    helpers.apply_default_to_input_args(input_args)
+    input_args = helpers.apply_default_to_input_args(input_args)
 
     if input_args.num_datastores == 0:
         fail("'num_datastores' is zero in module parameter. Nothing will be deployed.")
 
     output = datastore_module.add_multiple_datastore_services(input_args.num_datastores)
 
-    print("Module " + MODULE_NAME_FOR_LOGGING + " deployed successfully.")
+    print("Module " + MODULE_NAME_FOR_LOGGING + " deployed successfully. Output was:")
+    print(output)
     return output

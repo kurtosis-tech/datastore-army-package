@@ -1,5 +1,9 @@
 # TBD
 
+### Changes 
+- Renamed `kurtosis.mod` file to the new `kurtosis.yml` file format
+- Remove protobuf. Package input and output types does not rely on protobuf schema anymore
+
 # 0.3.0
 
 ### Removals

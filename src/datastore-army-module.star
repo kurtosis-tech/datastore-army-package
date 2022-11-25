@@ -27,4 +27,4 @@ def add_multiple_datastore_services(num_datastores):
         service_id = SERVICE_ID_PREFIX + str(index)
         service_id_to_port_id[service_id] = add_datastore_service(service_id)
 
-    return helpers.convert_output(service_id_to_port_id)
+    return service_id_to_port_id

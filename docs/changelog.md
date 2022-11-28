@@ -1,5 +1,7 @@
 # TBD
 
+# 0.3.0
+
 ### Removals
 - Removed the `scripts` folder, uses should use `kurtosis run` instead
 

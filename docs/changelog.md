@@ -3,6 +3,17 @@
 - Renamed `kurtosis.mod` file to the new `kurtosis.yml` file format
 - Removed 'module' key in the 'kurtosis.yml' file
 
+# 0.3.1
+
+### Changes 
+- Renamed `kurtosis.mod` file to the new `kurtosis.yml` file format
+- Remove protobuf. Package input and output types does not rely on protobuf schema anymore
+
+# 0.3.0
+
+### Removals
+- Removed the `scripts` folder, uses should use `kurtosis run` instead
+
 ### Changes
 - Replace `load()` with `import_module`
 - Replaced the old `main` with `run` in main.star

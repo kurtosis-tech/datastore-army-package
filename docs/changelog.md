@@ -3,6 +3,11 @@
 ### Changes
 - Updated `run(input_args)` to `run(args)`
 
+# 0.3.2
+### Changes
+- Renamed `kurtosis.mod` file to the new `kurtosis.yml` file format
+- Removed 'module' key in the 'kurtosis.yml' file
+
 # 0.3.1
 
 ### Changes 

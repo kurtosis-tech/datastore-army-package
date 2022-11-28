@@ -1,8 +1,5 @@
 # TBD
 
-### Changes
-- Updated `run(input_args)` to `run(args)`
-
 # 0.3.1
 
 ### Changes 

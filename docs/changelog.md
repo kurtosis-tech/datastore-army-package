@@ -1,5 +1,8 @@
 # TBD
 
+### Removals
+- Removed the `scripts` folder, uses should use `kurtosis run` instead
+
 ### Changes
 - Replace `load()` with `import_module`
 - Replaced the old `main` with `run` in main.star

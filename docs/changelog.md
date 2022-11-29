@@ -2,6 +2,7 @@
 
 ### Changes
 - Updated `run(input_args)` to `run(args)`
+- Changed `datastore-army-module` to `datastore-army-package`
 
 # 0.3.2
 ### Changes

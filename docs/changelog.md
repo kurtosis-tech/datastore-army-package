@@ -1,5 +1,8 @@
 # TBD
 
+### Changes
+- Updated `run(input_args)` to `run(args)`
+
 # 0.3.2
 ### Changes
 - Renamed `kurtosis.mod` file to the new `kurtosis.yml` file format

@@ -1,7 +1,7 @@
 datastore_package = import_module('github.com/kurtosis-tech/datastore-army-package/src/datastore-army-package.star')
 helpers = import_module('github.com/kurtosis-tech/datastore-army-package/src/helpers.star')
 
-PACKAGE_NAME_FOR_LOGGING = "datastore_army_package"
+PACKAGE_NAME_FOR_LOGGING = "datastore-army-package"
 
 
 def run(args):

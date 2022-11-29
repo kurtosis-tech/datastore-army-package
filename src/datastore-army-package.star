@@ -1,4 +1,4 @@
-helpers = import_module('github.com/kurtosis-tech/datastore-army-module/src/helpers.star')
+helpers = import_module('github.com/kurtosis-tech/datastore-army-package/src/helpers.star')
 
 
 DATASTORE_IMAGE = "kurtosistech/example-datastore-server"

@@ -3,6 +3,7 @@
 ### Changes
 - Updated `run(input_args)` to `run(args)`
 - Changed `datastore-army-module` to `datastore-army-package`
+- Removed `print(output)` at the end as it is now printed by the framework
 
 # 0.3.2
 ### Changes

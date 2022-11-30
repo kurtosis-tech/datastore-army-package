@@ -5,8 +5,7 @@ PACKAGE_NAME_FOR_LOGGING = "datastore-army-package"
 
 
 def run(args):
-    print("Deploying package " + PACKAGE_NAME_FOR_LOGGING + " with args:")
-    print(args)
+    print("Deploying package " + PACKAGE_NAME_FOR_LOGGING + " with args: \n{0}".format(args))
     args = helpers.apply_default_to_input_args(args)
 
     if args.num_datastores == 0:
@@ -14,6 +13,5 @@ def run(args):
 
     output = datastore_package.add_multiple_datastore_services(args.num_datastores)
 
-    print("Package " + PACKAGE_NAME_FOR_LOGGING + " deployed successfully. Output was:")
-    print(output)
+    print("Package " + PACKAGE_NAME_FOR_LOGGING + " successfully deployed")
     return output

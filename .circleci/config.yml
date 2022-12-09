@@ -41,7 +41,7 @@ jobs:
       - checkout
 
       - run: |
-          kurtosis run "${PWD}" --args '{"num_datastores": 2}'
+          kurtosis run "${PWD}" '{"num_datastores": 2}'
 
       - slack/notify:
           channel: engineering

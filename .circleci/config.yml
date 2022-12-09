@@ -41,7 +41,7 @@ jobs:
       - checkout
 
       - run: |
-          kurtosis run "${PWD}" '{"num_datastores": 2}'
+          kurtosis run "${PWD}"
 
       - slack/notify:
           channel: engineering
@@ -75,10 +75,8 @@ jobs:
 
       - checkout
 
-      # When we have preview available for Kurtosis scripts switch that to preview only
-      # as we only want to check the the code compiles
       - run: |
-          kurtosis run "${PWD}" '{"num_datastores": 2}'
+          kurtosis run "${PWD}" --dry-run
 
 workflows:
   check_latest_version:

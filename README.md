@@ -5,7 +5,7 @@ This repository contains an executable Kurtosis package that starts [example dat
 To run it, use:
 
 ```
-kurtosis run github.com/kurtosis-tech/datastore-army-package --args '{"num_datastores":2}'
+kurtosis run github.com/kurtosis-tech/datastore-army-package '{"num_datastores":2}'
 ```
 
 Its args is JSON-serialized and should have the following structure:

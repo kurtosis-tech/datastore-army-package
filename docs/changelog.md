@@ -1,5 +1,8 @@
 # TBD
 
+### Breaking changes
+- Updated `struct` to `PortSpec` for declaring port definitions 
+
 ### Changes
 - Updated `run(input_args)` to `run(args)`
 - Changed `datastore-army-module` to `datastore-army-package`

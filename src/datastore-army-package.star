@@ -13,7 +13,7 @@ def add_datastore_service(unique_service_id):
     service_config = struct(
         image = DATASTORE_IMAGE,
         ports = {
-            DATASTORE_PORT_ID: struct(number = DATASTORE_PORT_NUMBER, protocol = DATASTORE_PORT_PROTOCOL)
+            DATASTORE_PORT_ID: PortSpec(number = DATASTORE_PORT_NUMBER, protocol = DATASTORE_PORT_PROTOCOL)
         }
     )
     add_service(service_id = unique_service_id, config = service_config)

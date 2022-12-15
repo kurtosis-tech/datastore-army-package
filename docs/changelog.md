@@ -1,5 +1,7 @@
 # TBD
 
+# 0.5.0
+
 ### Breaking changes
 - Updated `protocol` to `transport protocol` in PortSpec constructor to create port definitions 
 

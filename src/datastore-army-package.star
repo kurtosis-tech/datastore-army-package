@@ -3,7 +3,7 @@ helpers = import_module('github.com/kurtosis-tech/datastore-army-package/src/hel
 DATASTORE_IMAGE = "kurtosistech/example-datastore-server"
 DATASTORE_PORT_ID = "grpc"
 DATASTORE_PORT_NUMBER = 1323
-DATASTORE_PORT_PROTOCOL = "TCP"
+DATASTORE_TRANSPORT_PROTOCOL = "TCP"
 SERVICE_ID_PREFIX = "datastore-"
 
 
@@ -13,7 +13,7 @@ def add_datastore_service(unique_service_id):
     service_config = struct(
         image = DATASTORE_IMAGE,
         ports = {
-            DATASTORE_PORT_ID: PortSpec(number = DATASTORE_PORT_NUMBER, protocol = DATASTORE_PORT_PROTOCOL)
+            DATASTORE_PORT_ID: PortSpec(number = DATASTORE_PORT_NUMBER, transport_protocol = DATASTORE_TRANSPORT_PROTOCOL)
         }
     )
     add_service(service_id = unique_service_id, config = service_config)

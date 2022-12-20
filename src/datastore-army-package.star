@@ -8,7 +8,7 @@ SERVICE_ID_PREFIX = "datastore-"
 
 
 def add_datastore_service(plan, unique_service_id):
-    print("Adding service " + unique_service_id)
+    plan.print("Adding service " + unique_service_id)
 
     service_config = struct(
         image = DATASTORE_IMAGE,

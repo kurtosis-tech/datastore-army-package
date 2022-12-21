@@ -10,7 +10,7 @@ SERVICE_ID_PREFIX = "datastore-"
 def add_datastore_service(plan, unique_service_id):
     plan.print("Adding service " + unique_service_id)
 
-    service_config = struct(
+    service_config = ServiceConfig(
         image = DATASTORE_IMAGE,
         ports = {
             DATASTORE_PORT_ID: PortSpec(number = DATASTORE_PORT_NUMBER, transport_protocol = DATASTORE_TRANSPORT_PROTOCOL)

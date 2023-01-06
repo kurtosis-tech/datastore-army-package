@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.6.1](https://github.com/kurtosis-tech/datastore-army-package/compare/0.6.0...0.6.1) (2023-01-06)
+
+
+### Refactors
+
+* Update `add_service` to use `ServiceConfig` for its `config` arg ([#53](https://github.com/kurtosis-tech/datastore-army-package/issues/53)) ([bea66e0](https://github.com/kurtosis-tech/datastore-army-package/commit/bea66e0b14b78bba08433cdee5fdeb7d8d4da77f))
+
+
+### Miscellaneous
+
+* Release please adds a changelog entry for every PRs ([#54](https://github.com/kurtosis-tech/datastore-army-package/issues/54)) ([4a3ea98](https://github.com/kurtosis-tech/datastore-army-package/commit/4a3ea98634066959cdbca2e7d7ae942acf906815))
+
 ## [0.6.0](https://github.com/kurtosis-tech/datastore-army-package/compare/0.5.0...0.6.0) (2022-12-20)
 
 

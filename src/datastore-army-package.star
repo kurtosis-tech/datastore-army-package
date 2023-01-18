@@ -16,7 +16,8 @@ def add_datastore_service(plan, unique_service_id):
             DATASTORE_PORT_ID: PortSpec(number = DATASTORE_PORT_NUMBER, transport_protocol = DATASTORE_TRANSPORT_PROTOCOL)
         }
     )
-    plan.add_service(service_id = unique_service_id, config = service_config)
+    # TODO name the service_name argument after the new version gets out
+    plan.add_service(unique_service_id, config = service_config)
     return DATASTORE_PORT_ID
 
 

@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.6.2](https://github.com/kurtosis-tech/datastore-army-package/compare/0.6.1...0.6.2) (2023-01-27)
+
+
+### Features
+
+* Add option to start the services in parallel ([#59](https://github.com/kurtosis-tech/datastore-army-package/issues/59)) ([29a8d9c](https://github.com/kurtosis-tech/datastore-army-package/commit/29a8d9c608e44849e1954e314aa325d332a511d2))
+
+
+### Bug Fixes
+
+* removed service_id parameter name to break service_name change deadlock ([#56](https://github.com/kurtosis-tech/datastore-army-package/issues/56)) ([ae4f505](https://github.com/kurtosis-tech/datastore-army-package/commit/ae4f50551e04816ddcc28bdb32c4f78838f3c71d))
+
 ## [0.6.1](https://github.com/kurtosis-tech/datastore-army-package/compare/0.6.0...0.6.1) (2023-01-06)
 
 

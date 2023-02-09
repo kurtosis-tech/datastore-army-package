@@ -18,14 +18,15 @@ def add_multiple_datastore_services_sequential(plan, num_datastores):
     service_id_to_service_obj = {}
     for index in range(num_datastores):
         service_id = get_service_name(index)
-        service_id_to_service_obj[service_id] = plan.add_service(service_name = service_id, config = get_service_config())
+        service_id_to_service_obj[service_id] = plan.add_service(service_name = service_id, config = get_service_config(plan, index))
+        plan.print(service_id_to_service_obj[service_id])
     return service_id_to_service_obj
 
 def add_multiple_datastore_services_parallel(plan, num_datastores):
     all_service_configs = {}
     for index in range(num_datastores):
         service_id = get_service_name(index)
-        all_service_configs[service_id] = get_service_config()
+        all_service_configs[service_id] = get_service_config(plan, index)
 
     plan.print("Adding {0} datastore services all at once".format(len(all_service_configs)))
     service_id_to_service_obj = plan.add_services(all_service_configs)
@@ -34,10 +35,20 @@ def add_multiple_datastore_services_parallel(plan, num_datastores):
 def get_service_name(service_idx):
     return SERVICE_ID_PREFIX + str(service_idx)
 
-def get_service_config():
+def get_service_config(plan, service_index):
+    artifact_id = plan.upload_files(
+        src="github.com/kurtosis-tech/datastore-army-package/README.md",
+        name="readme-{0}".format(service_index)
+    )
+
     return ServiceConfig(
         image = DATASTORE_IMAGE,
         ports = {
-            DATASTORE_PORT_ID: PortSpec(number = DATASTORE_PORT_NUMBER, transport_protocol = DATASTORE_TRANSPORT_PROTOCOL)
-        }
+            DATASTORE_PORT_ID: PortSpec(number = DATASTORE_PORT_NUMBER, transport_protocol = DATASTORE_TRANSPORT_PROTOCOL),
+            "p2p": PortSpec(number = 1324, transport_protocol = DATASTORE_TRANSPORT_PROTOCOL),
+            "monitoring": PortSpec(number = 8080, transport_protocol = DATASTORE_TRANSPORT_PROTOCOL),
+        },
+        files = {
+            "/test-files/": artifact_id,
+        },
     )

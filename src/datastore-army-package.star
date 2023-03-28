@@ -18,7 +18,7 @@ def add_multiple_datastore_services_sequential(plan, num_datastores):
     service_id_to_service_obj = {}
     for index in range(num_datastores):
         service_id = get_service_name(index)
-        service_id_to_service_obj[service_id] = plan.add_service(service_name = service_id, config = get_service_config())
+        service_id_to_service_obj[service_id] = plan.add_service(service_id, config = get_service_config())
     return service_id_to_service_obj
 
 def add_multiple_datastore_services_parallel(plan, num_datastores):

@@ -11,7 +11,7 @@ def run(plan, args):
     if args.num_datastores == 0:
         fail("'num_datastores' is zero in package parameter. Nothing will be deployed.")
 
-    output = datastore_package.add_multiple_datastore_services(plan, args.num_datastores, args.parallel)
+    output = datastore_package.add_multiple_datastore_services(plan, args["num_datastores"], args["parallel"])
 
     plan.print("Package " + PACKAGE_NAME_FOR_LOGGING + " successfully deployed")
     return output

@@ -11,7 +11,7 @@ def apply_default_to_input_args(plan, input_args):
 
     parallel = False
     if PARALLEL_ARG_NAME in input_args:
-        parallel = input_args["PARALLEL_ARG_NAME"]
+        parallel = input_args[PARALLEL_ARG_NAME]
     else:
         plan.print("'{0}' not set in package args. Services will be added sequentially.".format(PARALLEL_ARG_NAME))
 

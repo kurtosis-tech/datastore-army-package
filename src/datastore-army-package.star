@@ -1,4 +1,4 @@
-helpers = import_module('/src/helpers.star')
+helpers = import_module('./helpers.star')
 
 DATASTORE_IMAGE = "kurtosistech/example-datastore-server"
 DATASTORE_PORT_ID = "grpc"

@@ -1,5 +1,5 @@
-datastore_package = import_module('/src/datastore-army-package.star')
-helpers = import_module('/src/helpers.star')
+datastore_package = import_module('./src/datastore-army-package.star')
+helpers = import_module('./src/helpers.star')
 
 PACKAGE_NAME_FOR_LOGGING = "datastore-army-package"
 

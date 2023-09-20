@@ -1,5 +1,33 @@
 # Changelog
 
+## [0.6.2](https://github.com/kurtosis-tech/datastore-army-package/compare/0.6.1...0.6.2) (2023-09-20)
+
+
+### Features
+
+* Add option to start the services in parallel ([#59](https://github.com/kurtosis-tech/datastore-army-package/issues/59)) ([29a8d9c](https://github.com/kurtosis-tech/datastore-army-package/commit/29a8d9c608e44849e1954e314aa325d332a511d2))
+
+
+### Bug Fixes
+
+* parallel arg name was hardcoded incorrectly ([#64](https://github.com/kurtosis-tech/datastore-army-package/issues/64)) ([16fb4b7](https://github.com/kurtosis-tech/datastore-army-package/commit/16fb4b79b828137e145ce27fc5545ce7de8961f5))
+* remove named argument service_name so that it builds with new Kurtosis ([#62](https://github.com/kurtosis-tech/datastore-army-package/issues/62)) ([2a3cf9c](https://github.com/kurtosis-tech/datastore-army-package/commit/2a3cf9cb3380761f9762ef6c69217b9090dca02d))
+* removed service_id parameter name to break service_name change deadlock ([#56](https://github.com/kurtosis-tech/datastore-army-package/issues/56)) ([ae4f505](https://github.com/kurtosis-tech/datastore-army-package/commit/ae4f50551e04816ddcc28bdb32c4f78838f3c71d))
+* Revert 'refactor: replacing local absolute locators with local relative locators' ([#66](https://github.com/kurtosis-tech/datastore-army-package/issues/66)) ([983df8f](https://github.com/kurtosis-tech/datastore-army-package/commit/983df8f3117e292ac765ddbb7d40508b44b026ad))
+
+
+### Refactors
+
+* replacing local absolute locators with local relative locators ([#65](https://github.com/kurtosis-tech/datastore-army-package/issues/65)) ([488e7f8](https://github.com/kurtosis-tech/datastore-army-package/commit/488e7f8651c1d5aa25aa2dfe82b65c45666d926b))
+* replacing local absolute locators with local relative locators ([#67](https://github.com/kurtosis-tech/datastore-army-package/issues/67)) ([3138e86](https://github.com/kurtosis-tech/datastore-army-package/commit/3138e86624ffd1fd3b911d0e51f9386c4c88c735))
+* Use args as dict instead of struct ([05eefa1](https://github.com/kurtosis-tech/datastore-army-package/commit/05eefa1a0168ccdcc9129d5a4011f4de5951bfb8))
+* Use args as dict instead of struct ([#63](https://github.com/kurtosis-tech/datastore-army-package/issues/63)) ([05eefa1](https://github.com/kurtosis-tech/datastore-army-package/commit/05eefa1a0168ccdcc9129d5a4011f4de5951bfb8))
+
+
+### Miscellaneous
+
+* Rename master to main ([#60](https://github.com/kurtosis-tech/datastore-army-package/issues/60)) ([25ecb4c](https://github.com/kurtosis-tech/datastore-army-package/commit/25ecb4c271f870d6fdf8745169a142519e49aab8))
+
 ## [0.6.1](https://github.com/kurtosis-tech/datastore-army-package/compare/0.6.0...0.6.1) (2023-01-06)
 
 
